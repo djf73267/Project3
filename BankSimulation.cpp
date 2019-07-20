@@ -1,5 +1,5 @@
 #include "Customer.cpp"
-#include "QueueType.cpp"
+#include "QueType.cpp"
 #include "PriorityQueue.cpp"
 #include <cstdlib>
 #include <iostream>
@@ -9,7 +9,7 @@ using namespace std;
 
 int main(){
     
-    QueueType<Customer> waitQueue;
+    QueType<Customer> waitQueue;
     int numTellers;
     string command;
     ifstream file;
