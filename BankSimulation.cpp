@@ -15,14 +15,6 @@ int main(){
     ifstream file;
     file.open("inFile.txt");
     
-//    double numLines = 0;
-//    string line;
-//
-//    while (getline(file, line))
-//    {
-//        ++numLines;
-//    }
-//    numLines = numLines -1;
     
     while(file >> command)
     {
@@ -33,14 +25,13 @@ int main(){
         }
         else{
             
-            string trash;
+            string line;
             int a, s;
-            file >> trash;
+            file >> line;
             file >> a;
-            file >> trash;
+            file >> line;
             file >> s;
             Customer temp(command, a, s);
-         
             waitQueue.Enqueue(temp);
         }
     }
@@ -71,9 +62,8 @@ int main(){
             bankQueue.dequeue(temp);
             if(!waitQueue.IsEmpty())
             {
-                Customer trash;
-                trash = waitQueue.peek();
-                wait = temp.getArrival() + temp.getService() + temp.getWait() - trash.getArrival();
+                Customer frontItem = waitQueue.peek();
+                wait = temp.getArrival() + temp.getService() + temp.getWait() - frontItem.getArrival();
             }
             cout << temp;
         }
