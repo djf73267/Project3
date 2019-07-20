@@ -13,13 +13,13 @@ int main(){
     int numTellers;
     string command;
     ifstream file;
-    file.open("input.txt");
+    file.open("input.txt"); //opening file
     
     
-    while(file >> command)
+    while(file >> command)//loop
     {
         
-        if(command == "numTellers")
+        if(command == "numTellers")//conditional
         {
             file >> numTellers;
         }
@@ -38,32 +38,34 @@ int main(){
     file.close();
     
     
-    PriorityQueue<Customer> bankQueue;
-    int wait = 0;
-    while((bankQueue.length() < numTellers) && (!waitQueue.IsEmpty()))
+    PriorityQueue<Customer> bQueue;
+    int totalWait = 0;
+    while((bQueue.length() < numTellers) && (!waitQueue.IsEmpty()))//loop
     {
         Customer temp;
-        waitQueue.Dequeue(temp);
-        bankQueue.enqueue(temp, (temp.getArrival() + temp.getService()));
+        waitQueue.Dequeue(temp);//dequeue from wait queue
+        int AS = temp.getArrival() + temp.getService();
+        bQueue.enqueue(temp, AS);//enqueue to bQueue
     }
     
-    while((!bankQueue.isEmpty()) || (!waitQueue.IsEmpty()))
+    while((!bQueue.isEmpty()) || (!waitQueue.IsEmpty()))//loop
     {
-        if((bankQueue.length() < numTellers) && (!waitQueue.IsEmpty()))
+        if((bQueue.length() < numTellers) && (!waitQueue.IsEmpty()))//conditional
         {
             Customer temp;
-            waitQueue.Dequeue(temp);
-            temp.setWait(wait);
-            bankQueue.enqueue(temp, (temp.getArrival() + temp.getService() + temp.getWait()));
+            waitQueue.Dequeue(temp);//dequeue from wait queue
+            temp.setWait(totalWait);
+            int ASW = temp.getArrival() + temp.getService() + temp.getWait();
+            bQueue.enqueue(temp, ASW);//enqueue to bQueue
         }
         else
         {
             Customer temp;
-            bankQueue.dequeue(temp);
-            if(!waitQueue.IsEmpty())
+            bQueue.dequeue(temp);//dequeue from bQueue
+            if(!waitQueue.IsEmpty())//conditional
             {
                 Customer frontItem = waitQueue.peek();
-                wait = temp.getArrival() + temp.getService() + temp.getWait() - frontItem.getArrival();
+                totalWait = temp.getArrival() + temp.getService() + temp.getWait() - frontItem.getArrival();
             }
             cout << temp;
         }
@@ -72,12 +74,13 @@ int main(){
     string line;
     ifstream myfile("input.txt");
     
-    while (getline(myfile, line))
+    while (getline(myfile, line))//loop
     {
         ++numLines;
     }
     numLines = numLines - 2.0;
-    cout << "Average waiting time: " << wait/numLines << endl;
+    double average = totalWait/numLines;
+    cout << "Average waiting time: " << average << endl;
     
     return EXIT_SUCCESS;
 }
