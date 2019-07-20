@@ -13,7 +13,7 @@ int main(){
     int numTellers;
     string command;
     ifstream file;
-    file.open("inFile.txt");
+    file.open("input.txt");
     
     
     while(file >> command)
@@ -70,7 +70,7 @@ int main(){
     }
     double numLines = 0;
     string line;
-    ifstream myfile("inFile.txt");
+    ifstream myfile("input.txt");
     
     while (getline(myfile, line))
     {
